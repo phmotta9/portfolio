@@ -1,82 +1,371 @@
-import { Header } from './components/header'
-import './index.css'
-import { Mail } from "lucide-react";
-import { ArrowRight } from "lucide-react";
-import { Disc } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { Download } from "lucide-react";
-import { User } from "lucide-react";
-import { GraduationCap } from "lucide-react";
+import { useRef } from "react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Disc,
+  Download,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+  MoveUp,
+  User,
+} from "lucide-react";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import {
+  SiCplusplus,
+  SiCss,
+  SiHtml5,
+  SiJavascript,
+  SiPython,
+  SiReact,
+  SiTypescript,
+} from "react-icons/si";
 
+import { Header } from "./components/header";
+import profileImage from "./assets/foto-portfolio.png";
+import devCurrency from "./assets/devCurrency.png";
+import filmHive from "./assets/filmHive.png";
+import rmDiesel from "./assets/rmDiesel.png";
+import "./index.css";
+
+const technologies = [
+  { name: "TypeScript", icon: SiTypescript, color: "#3178c6" },
+  { name: "JavaScript", icon: SiJavascript, color: "#f7df1e" },
+  { name: "React", icon: SiReact, color: "#61dafb" },
+  { name: "C++", icon: SiCplusplus, color: "#00599c" },
+  { name: "Python", icon: SiPython, color: "#3776ab" },
+  { name: "HTML", icon: SiHtml5, color: "#e34f26" },
+  { name: "CSS", icon: SiCss, color: "#663399" },
+];
+
+const projects = [
+  {
+    title: "FilmHive",
+    description: "Plataforma para avaliar filmes e séries.",
+    tags: ["React", "JavaScript", "TMDB API"],
+    preview: "film",
+    image: filmHive,
+    githubUrl: "https://github.com/phmotta9/film-hive",
+    deployUrl: "",
+  },
+  {
+    title: "DevCurrency",
+    description: "Projeto web para visualização de criptomoedas.",
+    tags: ["React", "TypeScript", "CoinCap API"],
+    preview: "task",
+    image: devCurrency,
+    githubUrl: "https://github.com/phmotta9/criptomoedas",
+    deployUrl: "",
+  },
+  {
+    title: "RM Diesel",
+    description: "Meu primeiro projeto desenvolvido para uma mecânica.",
+    tags: ["HTML", "CSS"],
+    preview: "portfolio",
+    image: rmDiesel,
+    githubUrl: "https://github.com/phmotta9/site-rm-diesel",
+    deployUrl: "https://rminjecaodiesel.com.br/",
+  },
+  {
+    title: "Próximo projeto",
+    description: "Novas interfaces e aplicações estão em desenvolvimento.",
+    tags: ["Em breve"],
+    preview: "portfolio",
+    image: "",
+    githubUrl: "",
+    deployUrl: "",
+  },
+];
+
+function downloadCV() {
+  const link = document.createElement("a");
+  link.href = "/curriculo.pdf";
+  link.download = "curriculo-pedro-motta.pdf";
+  link.click();
+}
 
 export default function App() {
+  const techListRef = useRef<HTMLDivElement>(null);
+  const projectListRef = useRef<HTMLDivElement>(null);
+
+  function scrollTechList(direction: "left" | "right") {
+    techListRef.current?.scrollBy({
+      left: direction === "left" ? -180 : 180,
+      behavior: "smooth",
+    });
+  }
+
+  function scrollProjectList(direction: "left" | "right") {
+    const projectList = projectListRef.current;
+
+    if (!projectList) {
+      return;
+    }
+
+    const maxScroll = projectList.scrollWidth - projectList.clientWidth;
+    const isAtStart = projectList.scrollLeft <= 0;
+    const isAtEnd = projectList.scrollLeft >= maxScroll - 5;
+
+    if (direction === "right" && isAtEnd) {
+      projectList.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (direction === "left" && isAtStart) {
+      projectList.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
+
+    projectList.scrollBy({
+      left: direction === "left" ? -360 : 360,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <div className="App">
       <Header />
 
-      <section className="home">
+      <section className="home" id="home">
         <div className="content-home">
-          <h2>  <Disc size={8} fill="currentColor" strokeWidth={0} style={{ color: "#5eff00" }} /> DISPONÍVEL PARA OPORTUNIDADES</h2>
-          <h1 id='nome'>Pedro Motta</h1>
-          <h1 id='cargo'>Software Engineer</h1>
-          <p>Tranformo ideias em aplicações modernas,<br /> performáticas e intuitivas. Apaixonado por criar <br /> experiências digitais incríveis.</p>
+          <h2>
+            <Disc size={8} fill="currentColor" strokeWidth={0} style={{ color: "#5eff00" }} />
+            DISPONÍVEL PARA OPORTUNIDADES
+          </h2>
+          <h1 id="nome">Pedro Motta</h1>
+          <h1 id="cargo">Software Engineer</h1>
+          <p>
+            Transformo ideias em aplicações modernas, performáticas e intuitivas.
+            Apaixonado por criar experiências digitais incríveis.
+          </p>
 
-          <div className="buttons">  
-            <button className='projectsButton'>Ver Projetos <ArrowRight size={20}/></button>  <button className="contactButton">Entrar em Contato <Mail size={20}/></button>
-          </div>  
+          <div className="buttons">
+            <a className="projectsButton" href="#projects">
+              Ver Projetos <ArrowRight size={20} />
+            </a>
+            <a className="contactButton" href="#contact">
+              Entrar em Contato <Mail size={20} />
+            </a>
+          </div>
 
           <div className="social-icons">
-            <a
-              href="https://github.com/phmotta9"
-              target="_blank"
-            >
+            <a href="https://github.com/phmotta9" target="_blank" rel="noreferrer" aria-label="GitHub">
               <FaGithub size={24} />
             </a>
-
             <a
               href="https://www.linkedin.com/in/pedro-motta-1b5a41277/"
               target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
             >
               <FaLinkedin size={24} />
             </a>
-
-            <a 
-              href="mailto:pedromotta135@gmail.com"
-              target="_blank"
-            >
+            <a href="mailto:pedromotta135@gmail.com" aria-label="Email">
               <Mail size={24} />
             </a>
           </div>
-        </div> 
+        </div>
+
+        <img src={profileImage} alt="Foto de Pedro Motta" className="profile-image" />
       </section>
 
-      <section className="about">
+      <section className="about" id="about">
         <div className="content-about">
           <h2>SOBRE MIM</h2>
           <h1>Mais sobre mim</h1>
-          <p>Sou estudante de Engenharia de Software e desenvolvedor <br /> full-stack. Gosto de transformar problemas complexos em <br /> soluções simples e elegantes. <br /> <br />Atualmente focado em construir produtos escaláveis <br /> utilizando as melhores tecnologias do mercado.</p>
+          <p>
+            Sou estudante de Engenharia de Software e desenvolvedor full-stack. Gosto de transformar
+            problemas complexos em soluções simples e elegantes.
+            <br />
+            <br />
+            Atualmente focado em construir produtos escaláveis utilizando as melhores tecnologias do mercado.
+          </p>
 
-          <button className="contactButton">Baixar CV <Download size={20} /></button>
+          <button onClick={downloadCV} className="contactButton" type="button">
+            Baixar CV <Download size={20} />
+          </button>
         </div>
 
-        <div className="info-about">
-          <div className="info-icons">
-            <User size={45} />
-            <GraduationCap size={45} />
-            <Mail size={45} />
+        <div className="container-info">
+          <div className="info-about">
+            <div className="info-icons">
+              <User size={45} />
+              <GraduationCap size={45} />
+              <Mail size={45} />
+            </div>
+            <div className="info-item">
+              <h3>Nome</h3>
+              <p>Pedro Henrique Motta Rodrigues</p>
+
+              <h3>Formação</h3>
+              <p>Engenharia de Software</p>
+
+              <h3>Email</h3>
+              <p>pedromotta135@gmail.com</p>
+            </div>
           </div>
-          <div className="info-item">
-            <h3>Nome</h3>
-            <p>Pedro Henrique Motta Rodrigues</p>
 
-            <h3>Formação</h3>
-            <p>Engenharia de Software</p>
+          <div className="tech-stack">
+            <h3>MINHAS TECNOLOGIAS</h3>
+            <div className="tech-carousel">
+              <button
+                className="tech-arrow"
+                type="button"
+                aria-label="Rolar tecnologias para a esquerda"
+                onClick={() => scrollTechList("left")}
+              >
+                <ChevronLeft size={18} />
+              </button>
 
-            <h3>Email</h3>
-            <p>pedromotta135@gmail.com</p>
+              <div className="tech-list" ref={techListRef}>
+                {technologies.map(({ name, icon: Icon, color }) => (
+                  <div className="tech-item" key={name}>
+                    <Icon size={26} color={color} />
+                    <span>{name}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className="tech-arrow"
+                type="button"
+                aria-label="Rolar tecnologias para a direita"
+                onClick={() => scrollTechList("right")}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
         </div>
       </section>
+
+      <section className="projects" id="projects">
+        <div className="projects-content">
+          <div className="projects-header">
+            <div>
+              <h2>PROJETOS</h2>
+              <h1>Meus projetos</h1>
+            </div>
+
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://github.com/phmotta9?tab=repositories"
+              className="projects-link"
+            >
+              Ver todos os projetos <ArrowRight size={22} />
+            </a>
+          </div>
+
+          <div className="projects-carousel">
+            <button
+              className="projects-arrow"
+              type="button"
+              aria-label="Rolar projetos para a esquerda"
+              onClick={() => scrollProjectList("left")}
+            >
+              <ChevronLeft size={22} />
+            </button>
+
+            <div className="projects-grid" ref={projectListRef}>
+              {projects.map((project) => (
+                <article className="project-card" key={project.title}>
+                  <div className={`project-preview ${project.preview}`}>
+                    {project.image ? (
+                      <img src={project.image} alt={`Preview do projeto ${project.title}`} />
+                    ) : (
+                      <div className="preview-window">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="project-info">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+
+                    <div className="project-tags">
+                      {project.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+
+                    <div className="project-actions">
+                      <a
+                        href={project.githubUrl || "#projects"}
+                        target={project.githubUrl ? "_blank" : undefined}
+                        rel={project.githubUrl ? "noreferrer" : undefined}
+                        aria-label={`Ver repositório do projeto ${project.title}`}
+                      >
+                        <FaGithub size={24} />
+                      </a>
+                      <a
+                        href={project.deployUrl || "#projects"}
+                        target={project.deployUrl ? "_blank" : undefined}
+                        rel={project.deployUrl ? "noreferrer" : undefined}
+                        aria-label={`Abrir projeto ${project.title}`}
+                      >
+                        <ExternalLink size={24} />
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <button
+              className="projects-arrow"
+              type="button"
+              aria-label="Rolar projetos para a direita"
+              onClick={() => scrollProjectList("right")}
+            >
+              <ChevronRight size={22} />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer className="footer" id="contact">
+        <div className="footer-content">
+          <div className="footer-contact">
+            <div>
+              <span>ENTRE EM CONTATO</span>
+              <h2>Vamos construir algo incrível?</h2>
+              <p>Estou sempre aberto a novas oportunidades e projetos desafiadores. Vamos conversar!</p>
+            </div>
+
+            <div className="footer-actions">
+              <a href="mailto:pedromotta135@gmail.com">
+                <Mail size={18} />
+                Enviar Email
+              </a>
+              <a href="https://www.linkedin.com/in/pedro-motta-1b5a41277/" target="_blank" rel="noreferrer">
+                <FaLinkedin size={18} />
+                LinkedIn
+              </a>
+              <a href="https://wa.me/5567998263314" target="_blank" rel="noreferrer">
+                <FaWhatsapp size={18} />
+                WhatsApp
+              </a>
+              <a href="https://github.com/phmotta9" target="_blank" rel="noreferrer">
+                <FaGithub size={18} />
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <h2>PH<span>.</span></h2>
+            <p>© 2026 Pedro Motta. Todos os direitos reservados.</p>
+            <a href="#home" className="footer-top" aria-label="Voltar ao topo">
+              <MoveUp size={18} />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
-  )
+  );
 }

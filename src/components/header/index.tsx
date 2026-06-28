@@ -10,12 +10,15 @@ export function Header() {
 
       <nav className={styles.nav}>
         <ul>
-          <li>Ínicio</li>
-          <li>Sobre mim</li>
+          <li><a href="#home">Início</a></li>
+          <li><a href="#about">Sobre mim</a></li>
+          <li><a href="#projects">Projetos</a></li>
         </ul>
       </nav>
 
-      <button className={styles.contactButton}>Entrar em Contato <Mail size={20}/></button>
+      <a className={styles.contactButton} href="#contact">
+        Entrar em Contato <Mail size={20}/>
+      </a>
     </header>
   )
 }
