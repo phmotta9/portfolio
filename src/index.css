@@ -1,0 +1,111 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #000000;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+
+button{
+  cursor: pointer;
+  border: 0;
+}
+
+a{
+  text-decoration: none;
+  color: #fff;
+}
+
+.home{
+  min-height: calc(100vh - 90px);
+  width: 100%;
+  display: flex;
+  margin-top: 90px;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-home{
+  display: flex;
+  width: 600px;
+  height: 600px;
+  flex-direction: column;
+  padding: 50px;
+  margin-right: 200px;
+  justify-content: center;
+}
+
+#nome{
+  font-size: 50px;
+  color: #fff;
+}
+
+#cargo{
+  font-size: 50px;
+  background: linear-gradient(90deg, #4e1bfe 30%, #9b80fe 60%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+}
+
+.content-home p{
+  margin-bottom: 20px;
+  color: #a7a7a7;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.projectsButton{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 15px;
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  border: 1px solid #4e1bfe80;
+  background-color: #4e1bfe;
+  color: #ffffff;
+}
+
+.projectsButton:hover {
+  background-color: #000000;
+  color: #ffffff;
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.contactButton {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 15px;
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  border: 1px solid #4e1bfe80;
+  background-color: #000000;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.contactButton:hover {
+  background-color: #4e1bfe;
+  color: #ffffff;
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
