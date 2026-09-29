@@ -27,6 +27,7 @@ import profileImage from "./assets/foto-portfolio.png";
 import devCurrency from "./assets/devCurrency.png";
 import filmHive from "./assets/filmHive.png";
 import rmDiesel from "./assets/rmDiesel.png";
+import linkHub from "./assets/linkHub.png"
 import "./index.css";
 
 const technologies = [
@@ -41,19 +42,25 @@ const technologies = [
 
 const projects = [
   {
-    title: "FilmHive",
+    title: "Link Hub",
+    description: "Plataforma para criar perfis personalizados e reunir seus links em um só lugar.",
+    tags: ["React", "TypeScript", "Firebase"],
+    image: linkHub,
+    githubUrl: "https://github.com/phmotta9/projeto-linktree",
+    deployUrl: "",
+  },
+  {
+    title: "Film Hive",
     description: "Plataforma para avaliar filmes e séries.",
     tags: ["React", "JavaScript", "TMDB API"],
-    preview: "film",
     image: filmHive,
     githubUrl: "https://github.com/phmotta9/film-hive",
     deployUrl: "",
   },
   {
-    title: "DevCurrency",
+    title: "Dev Currency",
     description: "Projeto web para visualização de criptomoedas.",
     tags: ["React", "TypeScript", "CoinCap API"],
-    preview: "task",
     image: devCurrency,
     githubUrl: "https://github.com/phmotta9/criptomoedas",
     deployUrl: "",
@@ -62,16 +69,14 @@ const projects = [
     title: "RM Diesel",
     description: "Meu primeiro projeto desenvolvido para uma mecânica.",
     tags: ["HTML", "CSS"],
-    preview: "portfolio",
     image: rmDiesel,
     githubUrl: "https://github.com/phmotta9/site-rm-diesel",
-    deployUrl: "https://rminjecaodiesel.com.br/",
+    deployUrl: "",
   },
   {
     title: "Próximo projeto",
     description: "Novas interfaces e aplicações estão em desenvolvimento.",
     tags: ["Em breve"],
-    preview: "portfolio",
     image: "",
     githubUrl: "",
     deployUrl: "",
@@ -271,9 +276,14 @@ export default function App() {
             <div className="projects-grid" ref={projectListRef}>
               {projects.map((project) => (
                 <article className="project-card" key={project.title}>
-                  <div className={`project-preview ${project.preview}`}>
+                  <div className="project-preview">
                     {project.image ? (
-                      <img src={project.image} alt={`Preview do projeto ${project.title}`} />
+                      <img
+                        src={project.image}
+                        alt={`Preview do projeto ${project.title}`}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     ) : (
                       <div className="preview-window">
                         <span></span>
@@ -294,22 +304,30 @@ export default function App() {
                     </div>
 
                     <div className="project-actions">
-                      <a
-                        href={project.githubUrl || "#projects"}
-                        target={project.githubUrl ? "_blank" : undefined}
-                        rel={project.githubUrl ? "noreferrer" : undefined}
-                        aria-label={`Ver repositório do projeto ${project.title}`}
-                      >
-                        <FaGithub size={24} />
-                      </a>
-                      <a
-                        href={project.deployUrl || "#projects"}
-                        target={project.deployUrl ? "_blank" : undefined}
-                        rel={project.deployUrl ? "noreferrer" : undefined}
-                        aria-label={`Abrir projeto ${project.title}`}
-                      >
-                        <ExternalLink size={24} />
-                      </a>
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Ver repositório do projeto ${project.title}`}
+                        >
+                          <FaGithub size={24} />
+                        </a>
+                      )}
+                      {project.deployUrl ? (
+                        <a
+                          href={project.deployUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Abrir projeto ${project.title}`}
+                        >
+                          <ExternalLink size={24} />
+                        </a>
+                      ) : (
+                        <span className="project-action-inert" aria-hidden="true">
+                          <ExternalLink size={24} />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </article>
@@ -332,9 +350,8 @@ export default function App() {
         <div className="footer-content">
           <div className="footer-contact">
             <div>
-              <span>ENTRE EM CONTATO</span>
               <h2>Vamos construir algo incrível?</h2>
-              <p>Estou sempre aberto a novas oportunidades e projetos desafiadores. Vamos conversar!</p>
+              <p>Estou sempre aberto a novas oportunidades e projetos. Vamos conversar!</p>
             </div>
 
             <div className="footer-actions">
@@ -359,7 +376,6 @@ export default function App() {
 
           <div className="footer-bottom">
             <h2>PH<span>.</span></h2>
-            <p>© 2026 Pedro Motta. Todos os direitos reservados.</p>
             <a href="#home" className="footer-top" aria-label="Voltar ao topo">
               <MoveUp size={18} />
             </a>
